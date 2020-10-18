@@ -181,7 +181,6 @@ function updateGameArea() {
   if (myGameArea.keys && myGameArea.keys[38]) {
     if (!isCollision("top", myGamePiece.x, myGamePiece.y - 10 * speed)) {
       myGamePiece.speedY = -5 * speed;
-      console.log("case1");
     } else {
       myGamePiece.speedY = 0;
     }
@@ -442,9 +441,19 @@ function gameOver() {
 
 function popWindow() {
   popupWindow.style.display = "flex";
+  window.addEventListener("keyup", restartByPress);
 }
 
+const restartByPress = (e) => {
+  // listen do 'enter' click
+  if (e.keyCode === 13) {
+    e.preventDefault();
+    restartGame();
+  }
+};
+
 function restartGame() {
+  window.removeEventListener("keyup", restartByPress);
   popupWindow.style.display = "none";
   canvas.style.borderBottom = "5px solid green";
   canvas.style.borderTop = "5px solid green";
